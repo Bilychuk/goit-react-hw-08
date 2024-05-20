@@ -10,7 +10,7 @@ export default function HomePage() {
         <h1 className={css.title}>One place for all your contacts!</h1>
         <img
           className={css.image}
-          src="../../../public/yellow-phone-book-black-on-260nw-148371572.jpg"
+          src="/yellow-phone-book-black-on-260nw-148371572.jpg"
         />
       </div>
     </div>
