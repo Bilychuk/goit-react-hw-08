@@ -2,12 +2,17 @@ import { Formik, Form, Field } from 'formik';
 import css from './RegisterForm.module.css';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/operations';
+import toast from 'react-hot-toast';
+import { Button } from '@mui/material';
 
 export default function RegisterForm() {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(register(values));
+    dispatch(register(values))
+      .unwrap()
+      .then(() => toast.success('Success!'))
+      .catch(() => toast.error('Invalid data. Please check!'));
     actions.resetForm();
   };
   return (
@@ -19,7 +24,7 @@ export default function RegisterForm() {
       }}
       onSubmit={handleSubmit}
     >
-      <Form className={css.form}>
+      <Form className={css.form} autoComplete="off">
         <label className={css.label}>
           Username
           <Field type="text" name="name" />
@@ -32,7 +37,9 @@ export default function RegisterForm() {
           Password
           <Field type="password" name="password" />
         </label>
-        <button type="submit">Register</button>
+        <Button variant="contained" className={css.button} type="submit">
+          Register
+        </Button>
       </Form>
     </Formik>
   );

@@ -1,6 +1,9 @@
 .container {
   margin-bottom: 16px;
 }
+.label {
+  color: blue;
+}
 
 .input {
   outline: transparent;

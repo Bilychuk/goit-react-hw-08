@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register } from './operations';
-import toast from 'react-hot-toast';
+import { logIn, logOut, refreshUser, register } from './operations';
 
 const handlePending = state => {
   state.loading = true;
@@ -8,7 +7,6 @@ const handlePending = state => {
 const handleRejected = (state, action) => {
   state.loading = false;
   state.error = action.payload;
-  toast.error('Invalid data. Please check!');
 };
 
 const authSlice = createSlice({
@@ -20,6 +18,7 @@ const authSlice = createSlice({
     },
     token: null,
     isLoggedIn: false,
+    isRefreshing: false,
     loading: false,
     error: null,
   },
@@ -33,7 +32,39 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
-      .addCase(register.rejected, handleRejected),
+      .addCase(register.rejected, handleRejected)
+      .addCase(logIn.pending, handlePending)
+      .addCase(logIn.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(logIn.rejected, handleRejected)
+      .addCase(logOut.fulfilled, state => {
+        state.loading = false;
+        state.error = null;
+        state.user = {
+          name: null,
+          email: null,
+        };
+        state.token = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.isRefreshing = false;
+      }),
 });
 
 export const authReducer = authSlice.reducer;

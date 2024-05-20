@@ -1,6 +1,7 @@
 .container {
   padding: 10px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
@@ -14,6 +15,19 @@
 
 .button {
   width: 70px;
-  height: 30px;
-  font-weight: 600;
+  font-size: 10px;
+  cursor: pointer;
+  background-color: #4d5ae5;
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+button:hover,
+button:focus {
+  background-color: #404bbf;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
 }

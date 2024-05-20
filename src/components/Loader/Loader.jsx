@@ -8,11 +8,11 @@ export default function Loader() {
         visible={true}
         height="40"
         width="40"
-        color="#ff1b1e"
+        color="blue"
         ariaLabel="oval-loading"
         wrapperStyle={{}}
         wrapperClass=""
-        secondaryColor="#ff1b1e"
+        secondaryColor="blue"
       />
     </div>
   );
